@@ -1,0 +1,374 @@
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+
+ScreenManager:
+    transition: FadeTransition()
+    HomeScreen:
+    ExploreScreen:
+    MapScreen:
+    InfoScreen:
+    DetailScreen:
+
+<HomeScreen>:
+    name: "home"
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Image:
+            source: "cover.jpg"
+            size_hint: 1, 0.45
+            pos_hint: {"top": 1}
+            allow_stretch: True
+            keep_ratio: False
+
+        Label:
+            text: "Dobrodošli u Kreševo"
+            font_size: '34sp'
+            bold: True
+            color: 1, 1, 1, 1
+            halign: "center"
+            valign: "middle"
+            size_hint: None, None
+            size: self.texture_size
+            pos_hint: {"center_x": 0.5, "center_y": 0.80}
+
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: [15, 25, 15, 15]
+            spacing: 15
+            size_hint: 1, 0.65
+            pos_hint: {"top": 0.6}
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [30, 30, 0, 0]
+
+            Label:
+                text: "Explore"
+                font_size: '22sp'
+                color: 0, 0, 0, 1
+                size_hint_y: None
+                height: self.texture_size[1]
+                bold: True
+
+            GridLayout:
+                cols: 2
+                spacing: 10
+                size_hint_y: None
+                height: self.minimum_height
+
+                TouristCard:
+                    title: "Franjevački Samostan"
+                    image: "samostan.jpg"
+                    short_description: "14. st."
+                    full_description: "Franjevački samostan u Kreševu je kulturno i duhovno središte..."
+                    height: 160
+                TouristCard:
+                    title: "Sv. Jakov"
+                    image: "jakov.jpg"
+                    short_description: "Hodočašće"
+                    full_description: "Svetište sv. Jakova okuplja vjernike iz cijele regije..."
+                    height: 160
+                TouristCard:
+                    title: "Rimski Most"
+                    image: "rimski_most.jpg"
+                    short_description: "Stari kamen"
+                    full_description: "Jedan od najstarijih mostova u BiH..."
+                    height: 160
+                TouristCard:
+                    title: "Hobit Kućice"
+                    image: "hobit.jpg"
+                    short_description: "Neobično"
+                    full_description: "Neobične kuće u prirodi pružaju unikatno iskustvo..."
+                    height: 160
+
+        BottomNav:
+            pos_hint: {"x": 0, "y": 0}
+
+
+<ExploreScreen>:
+    name: "explore"
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Znamenitosti"
+            font_size: '24sp'
+            color: 0, 0, 0, 1
+            size_hint_y: None
+            height: 60
+
+        ScrollView:
+            GridLayout:
+                cols: 1
+                spacing: 10
+                padding: 10
+                size_hint_y: None
+                height: self.minimum_height
+
+                TouristCard:
+                    title: "Franjevački Samostan"
+                    image:"samostan.jpg"
+                    short_description: "Franjevački samostan sv. Katarine"
+                    full_description: "Franjevački samostan sv. Katarine u Kreševu pripada Vrhbosanskoj nadbiskupiji. Osnovan je pred kraj 14. stoljeća."
+                TouristCard:
+                    title: "Rimski Most"
+                    image: "rimski_most.jpg"
+                    short_description: "Povjesni most iz rimskog perioda."
+                    full_description: "Rimski most je jedan od najstarijih kamenih mostova u Bosni i Hercegovini..."
+                TouristCard:
+                    title: "Svetište Sv. Jakova"
+                    image: "jakov.jpg"
+                    short_description: "Popularno mjesto hodočašća."
+                    full_description: "Svetište svetog Jakova mjesto je okupljanja vjernika iz cijele regije..."
+                TouristCard:
+                    title: "Planinarski Dom"
+                    image: "planinarski_dom.jpg"
+                    short_description: "Odmorište za planinare."
+                    full_description: "Planinarski dom u Kreševu je idealno mjesto za planinare i ljubitelje prirode..."
+
+        BottomNav:
+
+<DetailScreen>:
+    name: "detail"
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: root.title
+            font_size: '28sp'
+            bold: True
+            color: 0, 0, 0, 1
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        Image:
+            source: root.image
+            size_hint_y: 0.5
+            allow_stretch: True
+
+        ScrollView:
+            Label:
+                text: root.description
+                color: 0.1, 0.1, 0.1, 1
+                text_size: self.width, None
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'left'
+                valign: 'top'
+
+        Button:
+            text: "Nazad"
+            size_hint_y: None
+            height: 50
+            on_release: app.root.current = "explore"
+
+<MapScreen>:
+    name: "map"
+    BoxLayout:
+        orientation: "vertical"
+
+        Label:
+            text: "Interaktivna mapa Kreševa"
+            font_size: '20sp'
+            color: 0, 0, 0, 1
+            size_hint_y: None
+            height: 50
+
+        MapView:
+            lat: 43.8903
+            lon: 18.0480
+            zoom: 14
+
+        BottomNav:
+
+<InfoScreen>:
+    name: "info"
+    FloatLayout:
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 1, None
+            height: self.minimum_height
+            pos_hint: {'top': 1}
+
+            ScrollView:
+                size_hint_y: None
+                height: root.height - 60  # rezerviši prostor za donju traku
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    padding: [20, 20, 20, 20]
+                    spacing: 20
+                    size_hint_y: None
+                    height: self.minimum_height
+
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+                    Image:
+                        source: "grb.jpg"
+                        size_hint: None, None
+                        size: 100, 100
+                        allow_stretch: True
+                        keep_ratio: True
+                        pos_hint: {"center_x": 0.5}
+
+                    Label:
+                        text: "Dobrodošli u turističku aplikaciju Kreševo!"
+                        font_size: '20sp'
+                        color: 0, 0, 0, 1
+                        halign: "center"
+                        valign: "middle"
+                        text_size: self.width, None
+                        size_hint_y: None
+                        height: self.texture_size[1]
+
+                    Label:
+                        text: "Ova aplikacija vam pruža uvid u najvažnije znamenitosti, kulturnu baštinu i prirodne ljepote našeg grada.\n\nHvala što koristite našu aplikaciju!"
+                        font_size: '16sp'
+                        color: 0.1, 0.1, 0.1, 1
+                        halign: "center"
+                        valign: "top"
+                        text_size: self.width - 20, None
+                        size_hint_y: None
+                        height: self.texture_size[1]
+
+        BottomNav:
+            size_hint_y: None
+            height: 60
+            pos_hint: {'x': 0, 'y': 0}
+
+
+
+
+<TouristCard@BoxLayout>:
+    orientation: 'vertical'
+    size_hint_y: None
+    height: 250
+    padding: 10
+    spacing: 5
+    title: ""
+    image: ""
+    short_description: ""
+    full_description: ""
+    canvas.before:
+        Color:
+            rgba: 1,1,1,1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10]
+
+    Image:
+        source: root.image
+        allow_stretch: True
+        size_hint_y: 0.6
+
+    Label:
+        text: root.title
+        font_size: '20sp'
+        color: 0, 0, 0, 1
+        size_hint_y: None
+        height: self.texture_size[1]
+
+    Label:
+        text: root.short_description
+        font_size: '16sp'
+        color: 0.3, 0.3, 0.3, 1
+        size_hint_y: None
+        height: self.texture_size[1]
+
+<BottomNav@BoxLayout>:
+    size_hint_y: None
+    height: 60
+    spacing: 5
+    padding: 5
+    canvas.before:
+        Color:
+            rgba: .95, .95, .95, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+<BottomNav@BoxLayout>:
+    size_hint_y: None
+    height: 60
+    spacing: 5
+    padding: 5
+    canvas.before:
+        Color:
+            rgba: .95, .95, .95, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    Button:
+        on_release: app.root.current = "home"
+        background_normal: ''
+        background_color: 0, 0, 0, 0
+        Image:
+            source: "home.png"
+            center_x: self.parent.center_x
+            center_y: self.parent.center_y
+            size_hint: None, None
+            size: 32, 32
+
+    Button:
+        on_release: app.root.current = "explore"
+        background_normal: ''
+        background_color: 0, 0, 0, 0
+        Image:
+            source: "explore.png"
+            center_x: self.parent.center_x
+            center_y: self.parent.center_y
+            size_hint: None, None
+            size: 32, 32
+
+    Button:
+        on_release: app.root.current = "map"
+        background_normal: ''
+        background_color: 0, 0, 0, 0
+        Image:
+            source: "map.png"
+            center_x: self.parent.center_x
+            center_y: self.parent.center_y
+            size_hint: None, None
+            size: 32, 32
+
+    Button:
+        on_release: app.root.current = "info"
+        background_normal: ''
+        background_color: 0, 0, 0, 0
+        Image:
+            source: "info.png"
+            center_x: self.parent.center_x
+            center_y: self.parent.center_y
+            size_hint: None, None
+            size: 32, 32
+
